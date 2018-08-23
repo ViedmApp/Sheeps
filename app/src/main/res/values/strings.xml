@@ -7,5 +7,6 @@
     <string name="madre">MADRE: </string>
     <string name="padre">PADRE: </string>
     <string name="btn_back">regresar</string>
+    <string name="txt_lectura">No leer nada</string>
 
 </resources>
