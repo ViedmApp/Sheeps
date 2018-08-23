@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OCR</string>
+    <string name="btn_enviar">enviar</string>
+    <string name="btn_cancelar">volver</string>
+    <string name="codigo">lectura</string>
+    <string name="edad">EDAD: </string>
+    <string name="madre">MADRE: </string>
+    <string name="padre">PADRE: </string>
+    <string name="btn_back">regresar</string>
+
+</resources>
