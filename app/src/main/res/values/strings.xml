@@ -8,5 +8,6 @@
     <string name="padre">PADRE: </string>
     <string name="btn_back">regresar</string>
     <string name="txt_lectura">No leer nada</string>
+    <string name="dialog_wait">Descargando la base de datos...</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -31,7 +32,11 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -183,9 +188,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(view.getId() == R.id.button_enviar){
-                        Intent intent2 = new Intent(MainActivity.this, ResultadosObtenidos.class);
-                        startActivity(intent2);
-                        finish();
+                    try {
+                        File file2;
+                        file2 = new File(Environment.getExternalStorageDirectory(), "database.txt");
+                        BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
+
+                        fin.close();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    Intent intent2 = new Intent(MainActivity.this, ResultadosObtenidos.class);
+                    startActivity(intent2);
+                    finish();
                 }
             }
         });
