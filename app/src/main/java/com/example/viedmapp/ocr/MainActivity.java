@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     TextView cancelar;
     Button enviar;
     EditText codEnviado;
+    Switch switchC;
+    ConstraintLayout bg;
     final int RequestCameraPermissionID = 1001;
 
     //datos a enviar:
@@ -83,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        switchC = (Switch) findViewById(R.id.switchOff);
 
         camara = findViewById(R.id.surface_view);
         mostrar =  findViewById(R.id.text_view);
@@ -212,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(editar.getWindowToken(), 0);
                     //abrir ventana con los resultados
-                    mostrarResultado(result);
+                    mostrarResultado(editar.getText().toString());
                 }
             }
         });
@@ -254,6 +259,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,
                         "No ha ingresado nada",
                         Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+    public void OffCam(View view){
+        if(view.getId() == R.id.switchOff){
+            if(switchC.isChecked()){
+                cameraSource.stop();
+                camara = findViewById(R.id.surface_view);
+                camara.setBackground(getDrawable(R.drawable.bgcam));
+            }else{
+                reiniciarActividad(MainActivity.this);
             }
 
         }

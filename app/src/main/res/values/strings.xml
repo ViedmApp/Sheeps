@@ -11,5 +11,6 @@
     <string name="dialog_wait">Descargando la base de datos...</string>
     <string name="msg_textEdit">Ingrese número manual</string>
     <string name="btn_inicio">iniciar</string>
+    <string name="cont_des_camoff">camara apaga icono</string>
 
 </resources>
