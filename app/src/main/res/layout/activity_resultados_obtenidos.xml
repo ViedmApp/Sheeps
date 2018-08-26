@@ -22,130 +22,69 @@
         app:layout_constraintVertical_bias="0.003">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <view
-                class="android.view.View"
-                android:layout_width="10sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/titulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorAccent"
-                android:text="1010"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/text"
-                android:textSize="40sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <View
-            class="android.view.View"
-            android:layout_width="fill_parent"
-            android:layout_height="3sp"
-            android:background="@color/colorPrimary" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <view
-                class="android.view.View"
-                android:layout_width="10sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/edad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10sp"
-                android:text="@string/edad"
-                android:textColor="@color/textDark"
-                android:textSize="21sp" />
-        </LinearLayout>
-
-        <View
-            class="android.view.View"
-            android:layout_width="fill_parent"
-            android:layout_height="3sp"
-            android:background="@color/colorPrimary" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <view
-                android:id="@+id/view2"
-                class="android.view.View"
-                android:layout_width="10sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/madre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10sp"
-                android:text="@string/madre"
-                android:textColor="@color/textDark"
-                android:textSize="21sp" />
-
-        </LinearLayout>
+            android:background="@color/colorAccent"
+            android:text=""
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <View
-            class="android.view.View"
             android:layout_width="fill_parent"
-            android:layout_height="3sp"
+            android:layout_height="1sp"
             android:background="@color/colorPrimary" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/edad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <view
-                android:id="@+id/view3"
-                class="android.view.View"
-                android:layout_width="10sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/padre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10sp"
-                android:text="@string/padre"
-                android:textColor="@color/textDark"
-                android:textSize="21sp" />
-
-        </LinearLayout>
+            android:padding="10sp"
+            android:text="@string/edad"
+            android:textColor="@color/textDark"
+            android:textSize="21sp" />
 
         <View
-            class="android.view.View"
             android:layout_width="fill_parent"
-            android:layout_height="3sp"
+            android:layout_height="1sp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/madre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10sp"
+            android:text="@string/madre"
+            android:textColor="@color/textDark"
+            android:textSize="21sp" />
+
+        <View
+
+            android:layout_width="fill_parent"
+            android:layout_height="1sp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/padre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10sp"
+            android:text="@string/padre"
+            android:textColor="@color/textDark"
+            android:textSize="21sp" />
+
+        <View
+
+            android:layout_width="fill_parent"
+            android:layout_height="1sp"
             android:background="@color/colorPrimary" />
 
 

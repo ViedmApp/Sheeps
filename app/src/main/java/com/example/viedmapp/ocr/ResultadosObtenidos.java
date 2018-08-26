@@ -15,16 +15,31 @@ public class ResultadosObtenidos extends AppCompatActivity {
     LinearLayout pantalla;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        edad = (TextView) findViewById(R.id.edad);
-        padre = (TextView) findViewById(R.id.padre);
-        madre = (TextView) findViewById(R.id.madre);
-        titulo = (TextView) findViewById(R.id.titulo);
-        pantalla = (LinearLayout) findViewById(R.id.layout_resultados);
+
+        pantalla = findViewById(R.id.layout_resultados);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados_obtenidos);
+        recibirDatos();
 
 
+    }
+    private void recibirDatos(){
+        edad =  findViewById(R.id.edad);
+        padre =  findViewById(R.id.padre);
+        madre =  findViewById(R.id.madre);
+        titulo = findViewById(R.id.titulo);
+
+        Bundle extras = getIntent().getExtras();
+        String num = extras.getString("tittle");
+        String setEdad = extras.getString("d0");
+        String setMadre = extras.getString("d1");
+        String setPadre = extras.getString("d2");
+
+        titulo.append(num);
+        edad.append(" " + setEdad);
+        madre.append(" " + setMadre);
+        padre.append(" " +setPadre);
     }
 
     public void onClick(View view) {

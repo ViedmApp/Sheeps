@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">OCR</string>
-    <string name="btn_enviar">enviar</string>
-    <string name="btn_cancelar">volver</string>
-    <string name="codigo">lectura</string>
+    <string name="btn_enviar">ENVIAR</string>
+    <string name="btn_cancelar">Volver</string>
+    <string name="codigo">Editar número</string>
     <string name="edad">EDAD: </string>
     <string name="madre">MADRE: </string>
     <string name="padre">PADRE: </string>
     <string name="btn_back">regresar</string>
-    <string name="txt_lectura">No leer nada</string>
+    <string name="txt_lectura">Sin algo que leer</string>
     <string name="dialog_wait">Descargando la base de datos...</string>
+    <string name="msg_textEdit">Ingrese número manual</string>
+    <string name="btn_inicio">iniciar</string>
 
 </resources>

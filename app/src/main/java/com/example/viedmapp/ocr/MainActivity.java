@@ -3,6 +3,7 @@ package com.example.viedmapp.ocr;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +24,12 @@ import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -45,9 +49,15 @@ public class MainActivity extends AppCompatActivity {
     TextView mostrar;
     CameraSource cameraSource;
     EditText editar;
-    Button cancelar;
+    TextView cancelar;
     Button enviar;
+    EditText codEnviado;
     final int RequestCameraPermissionID = 1001;
+
+    //datos a enviar:
+    String edad = "2";
+    String madre = "2121";
+    String padre = "5154";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -74,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        camara = (SurfaceView) findViewById(R.id.surface_view);
-        mostrar = (TextView) findViewById(R.id.text_view);
+        camara = findViewById(R.id.surface_view);
+        mostrar =  findViewById(R.id.text_view);
+        codEnviado = findViewById(R.id.editText);
 
         TextRecognizer textoReconocido = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textoReconocido.isOperational()) {
@@ -145,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 mostrar.setText(stringBuilder.toString());
-                                mostrarResultado(stringBuilder.toString());
+                                mostrarVentanaRevision(stringBuilder.toString());
                             }
                         });
 
@@ -159,14 +170,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void mostrarResultado(String result) {
-
+    private void mostrarVentanaRevision(final String result){
         LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.ventana_mensaje, (LinearLayout) findViewById(R.id.layout_mensaje));
+        View dialogLayout = inflater.inflate(R.layout.ventana_mensaje, (ConstraintLayout) findViewById(R.id.layout_mensaje));
 
-        editar = (EditText) dialogLayout.findViewById(R.id.edit_text);
-        cancelar = (Button) dialogLayout.findViewById(R.id.button_cancel);
-        enviar = (Button) dialogLayout.findViewById(R.id.button_enviar);
+        editar =  dialogLayout.findViewById(R.id.edit_text);
+        cancelar = dialogLayout.findViewById(R.id.button_cancel);
+        enviar = dialogLayout.findViewById(R.id.button_enviar);
         editar.setText(result);
         editar.setSelection(editar.getText().length());
 
@@ -174,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(dialogLayout);
         builder.setCancelable(false);
         final AlertDialog alertDialog = builder.create();
-
         //Botones Enviar y Cancelar
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(view.getId() == R.id.button_enviar){
-                    try {
+                    /*try {
                         File file2;
                         file2 = new File(Environment.getExternalStorageDirectory(), "database.txt");
                         BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
@@ -198,15 +207,29 @@ public class MainActivity extends AppCompatActivity {
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }
-                    Intent intent2 = new Intent(MainActivity.this, ResultadosObtenidos.class);
-                    startActivity(intent2);
-                    finish();
+                    }*/
+                    //cerrar teclado
+                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(editar.getWindowToken(), 0);
+                    //abrir ventana con los resultados
+                    mostrarResultado(result);
                 }
             }
         });
         Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+    }
+
+    private void mostrarResultado(String result) {
+        Intent intent2 = new Intent(MainActivity.this, ResultadosObtenidos.class);
+        intent2.putExtra("tittle", result);
+        intent2.putExtra("d0", edad);
+        intent2.putExtra("d1", madre);
+        intent2.putExtra("d2", padre);
+
+        startActivity(intent2);
+        finish();
     }
 
     static void reiniciarActividad(Activity actividad){
@@ -214,5 +237,25 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(actividad, actividad.getClass());
         actividad.startActivity(intent);
         actividad.finish();
+    }
+
+
+    public void onClick(View view) {
+        if(view.getId() == R.id.btn_enviartext){
+            if (!codEnviado.getText().toString().isEmpty()) {
+                //cerrar teclado
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(codEnviado.getWindowToken(), 0);
+                mostrarResultado(codEnviado.getText().toString());
+                codEnviado.setText("");
+
+            }
+            else{
+                Toast.makeText(MainActivity.this,
+                        "No ha ingresado nada",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 }
