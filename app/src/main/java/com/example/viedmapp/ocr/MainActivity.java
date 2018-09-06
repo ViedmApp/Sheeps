@@ -202,22 +202,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(view.getId() == R.id.button_enviar){
-                    /*try {
+                    try {
                         File file2;
                         file2 = new File(Environment.getExternalStorageDirectory(), "database.txt");
                         BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
-
+                        String busco = editar.getText().toString();
+                        busqueda(busco, fin);
                         fin.close();
                     }
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }*/
+                    }
                     //cerrar teclado
                     InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(editar.getWindowToken(), 0);
                     //abrir ventana con los resultados
-                    mostrarResultado(editar.getText().toString());
+
                 }
             }
         });
@@ -226,12 +227,52 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void mostrarResultado(String result) {
+    private void busqueda(String busco, BufferedReader fin) throws IOException {
+        int salto = Integer.parseInt(fin.readLine());
+        String[] datos = fin.readLine().trim().split("¡");
+        int i = salto;
+        while(i < datos.length && !(datos[i].equals(busco))){
+            i = i+salto;
+        }
+        if(i >= datos.length) {
+            Toast.makeText(MainActivity.this, "No se encuentra registrado en la base de datos", Toast.LENGTH_SHORT).show();
+        }
+        else if(datos[i].equals(busco)){
+            mostrarResultado(busco,datos,i,salto);
+        }
+
+
+        /*for (int i = salto; i < datos.length; i+=salto)
+        {
+
+        }*/
+
+    }
+
+    private void mostrarResultado(String result, String[] datos, int i, int salto ) {
+        String[] resultados = new String[salto];
+        String[] titulos = new String[salto];
         Intent intent2 = new Intent(MainActivity.this, ResultadosObtenidos.class);
-        intent2.putExtra("tittle", result);
-        intent2.putExtra("d0", edad);
-        intent2.putExtra("d1", madre);
-        intent2.putExtra("d2", padre);
+        String datakey = "";
+        for(int j = 0; j<salto; j++){
+            datakey = datakey.concat("d");
+            resultados[j] = datos[i];
+            intent2.putExtra(datakey, resultados[j]);
+            i++;
+        }
+
+        String tittlekey = "";
+        for (int k = 0; k < salto; k++)
+        {
+            tittlekey = tittlekey.concat("t");
+            titulos[k] = datos[k];
+            intent2.putExtra(tittlekey,datos[k]);
+        }
+        System.out.println(salto);
+
+        intent2.putExtra("valores", salto);
+        intent2.putExtra("database", datos);
+        intent2.putExtra("salto",salto);
 
         startActivity(intent2);
         finish();
@@ -248,10 +289,23 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         if(view.getId() == R.id.btn_enviartext){
             if (!codEnviado.getText().toString().isEmpty()) {
+                System.out.println(codEnviado.getText().toString());
+                try {
+                    File file2;
+                    file2 = new File(Environment.getExternalStorageDirectory(), "database.txt");
+                    BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
+                    String busco = codEnviado.getText().toString();
+                    busqueda(busco, fin);
+                    fin.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 //cerrar teclado
                 InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(codEnviado.getWindowToken(), 0);
-                mostrarResultado(codEnviado.getText().toString());
+                //abrir ventana con los resultados
                 codEnviado.setText("");
 
             }

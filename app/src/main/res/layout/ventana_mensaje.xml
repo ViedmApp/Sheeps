@@ -39,9 +39,9 @@
         <TextView
             android:id="@+id/button_cancel"
             android:layout_width="81sp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="19dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="24dp"
             android:onClick="onClick"
             android:text="@string/btn_cancelar"
             android:textColor="@color/text"
@@ -50,7 +50,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-
             android:id="@+id/button_enviar"
             android:layout_width="134dp"
             android:layout_height="wrap_content"

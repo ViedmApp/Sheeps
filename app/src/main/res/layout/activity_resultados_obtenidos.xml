@@ -21,71 +21,68 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.003">
 
-
         <TextView
-            android:id="@+id/titulo"
+            android:id="@+id/text_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:text=""
+            android:textSize="42sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/text"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:text="" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1sp"
-            android:background="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/edad"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layot_botones"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10sp"
-            android:text="@string/edad"
-            android:textColor="@color/textDark"
-            android:textSize="21sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btn_busMadre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/btn_buscarMadre"
+                android:textAlignment="center"
+                android:onClick="onClick"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_busPadre"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_busPadre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                android:onClick="onClick"
+                android:text="@string/btn_buscarPadre"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_busMadre"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="1sp"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimaryDark"
+            tools:layout_editor_absoluteY="32dp"
+            tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/madre"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/datos_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10sp"
-            android:text="@string/madre"
-            android:textColor="@color/textDark"
-            android:textSize="21sp" />
-
-        <View
-
-            android:layout_width="fill_parent"
-            android:layout_height="1sp"
-            android:background="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/padre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10sp"
-            android:text="@string/padre"
-            android:textColor="@color/textDark"
-            android:textSize="21sp" />
-
-        <View
-
-            android:layout_width="fill_parent"
-            android:layout_height="1sp"
-            android:background="@color/colorPrimary" />
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
 
     </LinearLayout>
@@ -95,14 +92,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:onClick="onClick"
         android:text="@string/btn_back"
         android:textColor="@color/text"
-        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintVertical_bias="1.0" />
+        />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_resultados"
+        app:layout_constraintVertical_bias="0.573"
+        android:isIndicator="true"/>
 
 </android.support.constraint.ConstraintLayout>
