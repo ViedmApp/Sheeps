@@ -15,5 +15,6 @@
     <string name="cont_des_camoff">camara apaga icono</string>
     <string name="btn_buscarMadre">buscar madre</string>
     <string name="btn_buscarPadre">buscar padre</string>
+    <string name="nueva_busqueda">Nueva busqueda</string>
 
 </resources>

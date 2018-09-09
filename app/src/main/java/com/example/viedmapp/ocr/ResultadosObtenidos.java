@@ -179,6 +179,12 @@ public class ResultadosObtenidos extends AppCompatActivity {
 
     }
 
+    public void goScan(View v){
+        Intent myintent = new Intent(ResultadosObtenidos.this, MainActivity.class);
+        startActivity(myintent);
+        finish();
+    }
+
 
     public void onBackPressed(){
         Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);

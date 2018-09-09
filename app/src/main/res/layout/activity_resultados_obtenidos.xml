@@ -8,10 +8,23 @@
     tools:context=".ResultadosObtenidos">
 
 
+    <TextView
+        android:id="@+id/btn_volver_scan"
+        android:layout_width="193dp"
+        android:layout_height="38dp"
+        android:drawableEnd="@drawable/ic_find_replace_black_24dp"
+        android:text="@string/nueva_busqueda"
+        android:textColor="#000"
+        android:textSize="21sp"
+        android:onClick="goScan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/layout_resultados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
         android:background="@color/text"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button_back"
@@ -25,11 +38,11 @@
             android:id="@+id/text_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="42sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
+            android:text=""
             android:textAlignment="center"
-            android:text="" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="42sp"
+            android:textStyle="bold" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_botones"
@@ -58,13 +71,13 @@
             <Button
                 android:id="@+id/btn_busMadre"
                 android:layout_width="0dp"
-                android:drawableStart="@drawable/mother"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimary"
+                android:drawableStart="@drawable/mother"
                 android:onClick="onClick"
                 android:text="@string/btn_buscarMadre"
                 android:textAlignment="center"
@@ -74,12 +87,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1sp"
             android:background="@color/colorPrimaryDark"
-            tools:layout_editor_absoluteY="32dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="32dp" />
 
         <LinearLayout
             android:id="@+id/linearCheck"
@@ -104,6 +118,7 @@
 
 
         </LinearLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1sp"
