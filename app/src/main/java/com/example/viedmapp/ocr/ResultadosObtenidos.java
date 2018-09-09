@@ -2,11 +2,13 @@ package com.example.viedmapp.ocr;
 
 import android.content.Intent;
 import android.media.Rating;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -23,13 +25,17 @@ import static android.app.PendingIntent.getActivity;
 
 public class ResultadosObtenidos extends AppCompatActivity {
 
-    RatingBar puntuacion;
     TextView mostrarId;
+    RatingBar puntuacion;
+    LinearLayout infoCheck;
+    ConstraintLayout layoutBotones;
+    ImageView checkImage;
 
     String idMadre;
     String idPadre;
     static private int cant;
     static private String[] dataBase;
+    static private String modo;
 
     RecyclerView picturesRecycler;
     ArrayList<Picture> pictures = new ArrayList<>();
@@ -39,45 +45,48 @@ public class ResultadosObtenidos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados_obtenidos);
 
-
         picturesRecycler = (RecyclerView) findViewById(R.id.datos_recycler);
         picturesRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-
-
-
+        picturesRecycler.setVerticalScrollBarEnabled(true);
 
         recibirDatos();
+
         AdapterRecyclerView adapterRecyclerView = new AdapterRecyclerView(pictures);
 
         picturesRecycler.setAdapter(adapterRecyclerView);
-
-
-
-
-
     }
 
 
     private void recibirDatos(){
 
         puntuacion = findViewById(R.id.ratingBar);
+        checkImage = findViewById(R.id.imgCheck);
         mostrarId = findViewById(R.id.text_titulo);
+        infoCheck =  findViewById(R.id.linearCheck);
+        layoutBotones = (ConstraintLayout) findViewById(R.id.layout_botones);
 
 
         Bundle extras = getIntent().getExtras();
         cant = extras.getInt("valores");
         dataBase = extras.getStringArray("database");
+        modo = extras.getString("modo");
 
         String datakey = "";
         String tittlekey = "";
+
+        puntuacion.setVisibility(View.INVISIBLE);
+        infoCheck.setVisibility(View.INVISIBLE);
+        layoutBotones.setVisibility(View.INVISIBLE);
+
 
         for(int i=0; i<cant; i++){
             tittlekey = tittlekey.concat("t");
             datakey = datakey.concat("d");
             String info = extras.getString(datakey);
             String tittle = extras.getString(tittlekey);
+            String lac = tittle.substring(0,2);
 
-            if(!(tittle.equalsIgnoreCase("rating")) && !(tittle.equalsIgnoreCase("id"))){
+            if(!(tittle.equalsIgnoreCase("rating")) && !(tittle.equalsIgnoreCase("id")) && !(lac.equalsIgnoreCase("la"))){
                 pictures.add(new Picture(tittle, info));
                 if(tittle.equalsIgnoreCase("madre")){
                     idMadre = info;
@@ -89,29 +98,47 @@ public class ResultadosObtenidos extends AppCompatActivity {
                     puntuacion.setProgress(Integer.valueOf(info));
                 }else if(tittle.equalsIgnoreCase("id")){
                     mostrarId.append(info);
+                }else if(lac.equalsIgnoreCase("la")){
+                    if(info.substring(0,1).equalsIgnoreCase("s")){
+                        checkImage.setImageResource(R.drawable.ic_check_box_black_24dp);
+                    }
                 }
             }
 
+        }
+
+        if(modo.substring(0,3).equalsIgnoreCase("pro")){
+            infoCheck.setVisibility(View.VISIBLE);
+        }
+        if(modo.substring(0,3).equalsIgnoreCase("gen")) {
+            puntuacion.setVisibility(View.VISIBLE);
+            layoutBotones.setVisibility(View.VISIBLE);
         }
 
     }
 
 
     public void onClick(View view) {
-        if(view.getId() == R.id.button_back){
-            Intent intent2 = new Intent(ResultadosObtenidos.this, MainActivity.class);
-            startActivity(intent2);
-            finish();
-        }if(view.getId() == R.id.btn_busMadre){
-            busqueda(idMadre, dataBase, cant);
-        }if(view.getId() == R.id.btn_busPadre){
-            busqueda(idPadre, dataBase, cant);
+        switch (view.getId()) {
+            case R.id.button_back:
+                Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
+                startActivity(intent2);
+                finish();
+                break;
+            case R.id.btn_busMadre:
+                System.out.println("data1:"+ dataBase[0]);
+                busqueda(idMadre, dataBase, cant);
+                System.out.println("data2:"+ dataBase[0]);
+                break;
+            case R.id.btn_busPadre:
+                busqueda(idPadre, dataBase, cant);
+                break;
         }
+
     }
 
     private void busqueda(String busco, String[] datos, int salto) {
         int i = salto;
-
         while (i < datos.length && !(datos[i].equals(busco))) {
             i = i + salto;
         }
@@ -141,20 +168,20 @@ public class ResultadosObtenidos extends AppCompatActivity {
             titulos[k] = datos[k];
             intent2.putExtra(tittlekey,datos[k]);
         }
-        System.out.println(salto);
 
         intent2.putExtra("valores", salto);
         intent2.putExtra("database", datos);
         intent2.putExtra("salto",salto);
+        intent2.putExtra("modo", modo);
 
         startActivity(intent2);
-        finish();
+
+
     }
 
 
     public void onBackPressed(){
-        Intent intent2 = new Intent(ResultadosObtenidos.this, MainActivity.class);
+        Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
         startActivity(intent2);
-        finish();
     }
 }

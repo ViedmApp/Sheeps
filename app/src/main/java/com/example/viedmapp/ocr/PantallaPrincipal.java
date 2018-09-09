@@ -30,8 +30,8 @@ import java.util.ArrayList;
 
 public class PantallaPrincipal extends AppCompatActivity implements AsyncResponse{
 
-    static private String datos;
-    static private String cantCol;
+    static private String[] nombreHojas = new String[3];
+    static private String cantCol,datos;
     static private String[] datos2;
     static private String name;
     //static private int cantCol2;
@@ -45,8 +45,9 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_principal);
-
-
+        nombreHojas[0] = "";
+        nombreHojas[1] = "";
+        nombreHojas[2] = "";
         SharedPreferences sharprefS = getSharedPreferences("sf",context.MODE_PRIVATE);
 
 
@@ -104,13 +105,28 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
     public void processFinish(JSONObject jsonObject) {
         try
         {
-            datos = jsonObject.getString("dato");
-            cantCol = jsonObject.getString("nCol");
-            File file = new File(Environment.getExternalStorageDirectory(), "database.txt");
-            file.createNewFile();
-            OutputStreamWriter fout1 = new OutputStreamWriter(new FileOutputStream(file));
-            fout1.write(cantCol+"\n" +datos);
-            fout1.close();
+            nombreHojas = jsonObject.getString("nombreHojas").split("¡");
+
+            for (int i = 0; i < 3; i++)
+            {
+                cantCol = jsonObject.getString(nombreHojas[i]+" cols");
+                datos = jsonObject.getString(nombreHojas[i]+"");
+                File file = new File(Environment.getExternalStorageDirectory(), nombreHojas[i]+".txt");
+                file.createNewFile();
+                OutputStreamWriter fout1 = new OutputStreamWriter(new FileOutputStream(file));
+                fout1.write(cantCol+"\n" +datos);
+                fout1.close();
+            }
+
+            SharedPreferences sf = getSharedPreferences("credenciales",context.MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = sf.edit();
+
+            editor1.putString("sheet1", nombreHojas[0]);
+            editor1.putString("sheet2", nombreHojas[1]);
+            editor1.putString("sheet3", nombreHojas[2]);
+            editor1.commit();
+
+
         }
         catch(Exception e)
         {
@@ -137,6 +153,18 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
     public void onClick(View view) {
         if(view.getId() == R.id.btn_leer){
             Intent myintent = new Intent(PantallaPrincipal.this, MainActivity.class);
+
+            SharedPreferences sf = getSharedPreferences("credenciales",context.MODE_PRIVATE);
+            String sheet1 = sf.getString("sheet1","");
+            String sheet2 = sf.getString("sheet2", "");
+            String sheet3 = sf.getString("sheet3", "");
+
+            //myintent.putExtra("hoja0",sheet1);
+            //myintent.putExtra("hoja1",sheet2);
+            //myintent.putExtra("hoja2",sheet3);
+
+            Toast.makeText(getApplicationContext(),"cargo: "+sheet1+" "+sheet2+" "+sheet3, Toast.LENGTH_SHORT).show();
+
             startActivity(myintent);
             finish();
         }
@@ -147,10 +175,12 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
             Toast.makeText(this, "Descargando "+name, Toast.LENGTH_SHORT).show();
             DataRequest dataRequest = new DataRequest(this);
             dataRequest.delegate = this;
-            dataRequest.execute("https://script.google.com/macros/s/AKfycbx_3i4ladoSuoap8_1DIWGfA7JmuQoLAQqs3krc-5Gi6wnVkgY/exec?name="+name);
+            dataRequest.execute("https://script.google.com/macros/s/AKfycbx_3i4ladoSuoap8_1DIWGfA7JmuQoLAQqs3krc-5Gi6wnVkgY/exec");
             SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharpref.edit();
+
             editor.putString("hojaGuardada",name);
+
             editor.commit();
 
         }

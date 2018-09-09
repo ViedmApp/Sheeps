@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,7 +20,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,19 +43,32 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     SurfaceView camara;
     TextView mostrar;
     CameraSource cameraSource;
     EditText editar;
-    TextView cancelar;
-    Button enviar;
+    ImageView cancelar;
+
     EditText codEnviado;
     Switch switchC;
     ConstraintLayout bg;
+
+    ImageView enviarGen;
+    ImageView enviarProd;
+    ImageView enviarRepro;
+
+    private static String modo = "gen";
+
     final int RequestCameraPermissionID = 1001;
+
+    private static String hojas1;
+    private static String hojas2;
+    private static String hojas3;
+
+    Context context = this;
+
 
     //datos a enviar:
     String edad = "2";
@@ -86,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Obteniendo el modo en que se ingreso (reproductivo, genealogico, productivo)
+
 
         switchC = (Switch) findViewById(R.id.switchOff);
 
@@ -175,21 +191,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void mostrarVentanaRevision(final String result){
+    private void mostrarVentanaRevision(String result){
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.ventana_mensaje, (ConstraintLayout) findViewById(R.id.layout_mensaje));
 
         editar =  dialogLayout.findViewById(R.id.edit_text);
         cancelar = dialogLayout.findViewById(R.id.button_cancel);
-        enviar = dialogLayout.findViewById(R.id.button_enviar);
+
+        enviarGen = dialogLayout.findViewById(R.id.btngen);
+        enviarProd = dialogLayout.findViewById(R.id.btnprod);
+        enviarRepro = dialogLayout.findViewById(R.id.btnrep);
+
         editar.setText(result);
         editar.setSelection(editar.getText().length());
+
+        /*Bundle extras = getIntent().getExtras();
+        hojas1 = extras.getString("hoja0");
+        hojas2 = extras.getString("hoja1");
+        hojas3 = extras.getString("hoja2");*/
+
+        SharedPreferences sf = getSharedPreferences("credenciales",context.MODE_PRIVATE);
+        String sheet1 = sf.getString("sheet1","");
+        String sheet2 = sf.getString("sheet2", "");
+        String sheet3 = sf.getString("sheet3", "");
+
+        hojas1 = sheet1;
+        hojas2 = sheet2;
+        hojas3 = sheet3;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogLayout);
         builder.setCancelable(false);
         final AlertDialog alertDialog = builder.create();
         //Botones Enviar y Cancelar
+
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,13 +233,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        enviar.setOnClickListener(new View.OnClickListener() {
+
+        enviarGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view.getId() == R.id.button_enviar){
+                if(view.getId() == R.id.btngen){
                     try {
+                        for(int i=0; i<3; i++){
+                            if(hojas1.substring(0,3).equalsIgnoreCase("gen")){
+                                modo = hojas1;
+                            }
+                            if(hojas2.substring(0,3).equalsIgnoreCase("gen")){
+                                modo = hojas2;
+                            }
+                            if(hojas3.substring(0,3).equalsIgnoreCase("gen")){
+                                modo = hojas3;
+                            }
+                        }
+
                         File file2;
-                        file2 = new File(Environment.getExternalStorageDirectory(), "database.txt");
+                        file2 = new File(Environment.getExternalStorageDirectory(), modo+".txt");
                         BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
                         String busco = editar.getText().toString();
                         busqueda(busco, fin);
@@ -222,6 +270,73 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        enviarProd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.btnprod){
+                    try {
+                        for(int i=0; i<3; i++){
+                            if(hojas1.substring(0,3).equalsIgnoreCase("pro")){
+                                modo = hojas1;
+                            }
+                            if(hojas2.substring(0,3).equalsIgnoreCase("pro")){
+                                modo = hojas2;
+                            }
+                            if(hojas3.substring(0,3).equalsIgnoreCase("pro")){
+                                modo = hojas3;
+                            }
+                        }
+
+                        File file2;
+                        file2 = new File(Environment.getExternalStorageDirectory(), modo+".txt");
+                        BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
+                        String busco = editar.getText().toString();
+                        busqueda(busco, fin);
+                        fin.close();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(editar.getWindowToken(), 0);
+                }
+            }
+        });
+        enviarRepro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.btnrep){
+                    try {
+                        for(int i=0; i<3; i++){
+                            if(hojas1.substring(0,3).equalsIgnoreCase("rep")){
+                                modo = hojas1;
+                            }
+                            if(hojas2.substring(0,3).equalsIgnoreCase("rep")){
+                                modo = hojas2;
+                            }
+                            if(hojas3.substring(0,3).equalsIgnoreCase("rep")){
+                                modo = hojas3;
+                            }
+                        }
+
+                        File file2;
+                        file2 = new File(Environment.getExternalStorageDirectory(), modo+".txt");
+                        BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
+                        String busco = editar.getText().toString();
+                        busqueda(busco, fin);
+                        fin.close();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(editar.getWindowToken(), 0);
+                }
+            }
+        });
         Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
@@ -230,6 +345,10 @@ public class MainActivity extends AppCompatActivity {
     private void busqueda(String busco, BufferedReader fin) throws IOException {
         int salto = Integer.parseInt(fin.readLine());
         String[] datos = fin.readLine().trim().split("¡");
+        for (int i = 0; i < datos.length; i++)
+        {
+            System.out.println(datos[i]);
+        }
         int i = salto;
         while(i < datos.length && !(datos[i].equals(busco))){
             i = i+salto;
@@ -238,18 +357,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "No se encuentra registrado en la base de datos", Toast.LENGTH_SHORT).show();
         }
         else if(datos[i].equals(busco)){
-            mostrarResultado(busco,datos,i,salto);
+            mostrarResultado(busco, datos, i, salto);
         }
 
-
-        /*for (int i = salto; i < datos.length; i+=salto)
-        {
-
-        }*/
 
     }
 
     private void mostrarResultado(String result, String[] datos, int i, int salto ) {
+
         String[] resultados = new String[salto];
         String[] titulos = new String[salto];
         Intent intent2 = new Intent(MainActivity.this, ResultadosObtenidos.class);
@@ -273,10 +388,12 @@ public class MainActivity extends AppCompatActivity {
         intent2.putExtra("valores", salto);
         intent2.putExtra("database", datos);
         intent2.putExtra("salto",salto);
+        intent2.putExtra("modo", modo);
 
         startActivity(intent2);
-        finish();
+
     }
+
 
     static void reiniciarActividad(Activity actividad){
         Intent intent = new Intent();
@@ -289,19 +406,9 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         if(view.getId() == R.id.btn_enviartext){
             if (!codEnviado.getText().toString().isEmpty()) {
+                cameraSource.stop();
                 System.out.println(codEnviado.getText().toString());
-                try {
-                    File file2;
-                    file2 = new File(Environment.getExternalStorageDirectory(), "database.txt");
-                    BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
-                    String busco = codEnviado.getText().toString();
-                    busqueda(busco, fin);
-                    fin.close();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                mostrarVentanaRevision(codEnviado.getText().toString());
                 //cerrar teclado
                 InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(codEnviado.getWindowToken(), 0);
