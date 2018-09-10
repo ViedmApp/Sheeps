@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "162953154158",
+    "firebase_url": "https://sheep-1587f.firebaseio.com",
+    "project_id": "sheep-1587f",
+    "storage_bucket": "sheep-1587f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162953154158:android:395c242a19a00837",
+        "android_client_info": {
+          "package_name": "com.example.viedmapp.ocr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162953154158-js9cr2trmsl3v51262u7nl8hktt1jp0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.viedmapp.ocr",
+            "certificate_hash": "b69b92ddb6a6c915c306d5a78996369944c03471"
+          }
+        },
+        {
+          "client_id": "162953154158-kg5ht6i2fqplb48id337mk86ic9eghel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGHwWGn1NhdmU9raEtz6GaqAjd3fVkEE8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162953154158-kg5ht6i2fqplb48id337mk86ic9eghel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

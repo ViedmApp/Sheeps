@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView enviarProd;
     ImageView enviarRepro;
 
-    private static String modo = "gen";
+    private static String modo = "g";
 
     final int RequestCameraPermissionID = 1001;
 
@@ -240,13 +240,13 @@ public class MainActivity extends AppCompatActivity {
                 if(view.getId() == R.id.btngen){
                     try {
                         for(int i=0; i<3; i++){
-                            if(hojas1.substring(0,3).equalsIgnoreCase("gen")){
+                            if(hojas1.equalsIgnoreCase("g")){
                                 modo = hojas1;
                             }
-                            if(hojas2.substring(0,3).equalsIgnoreCase("gen")){
+                            if(hojas2.equalsIgnoreCase("g")){
                                 modo = hojas2;
                             }
-                            if(hojas3.substring(0,3).equalsIgnoreCase("gen")){
+                            if(hojas3.equalsIgnoreCase("g")){
                                 modo = hojas3;
                             }
                         }
@@ -277,13 +277,13 @@ public class MainActivity extends AppCompatActivity {
                 if(view.getId() == R.id.btnprod){
                     try {
                         for(int i=0; i<3; i++){
-                            if(hojas1.substring(0,3).equalsIgnoreCase("pro")){
+                            if(hojas1.equalsIgnoreCase("p")){
                                 modo = hojas1;
                             }
-                            if(hojas2.substring(0,3).equalsIgnoreCase("pro")){
+                            if(hojas2.equalsIgnoreCase("p")){
                                 modo = hojas2;
                             }
-                            if(hojas3.substring(0,3).equalsIgnoreCase("pro")){
+                            if(hojas3.equalsIgnoreCase("p")){
                                 modo = hojas3;
                             }
                         }
@@ -310,13 +310,13 @@ public class MainActivity extends AppCompatActivity {
                 if(view.getId() == R.id.btnrep){
                     try {
                         for(int i=0; i<3; i++){
-                            if(hojas1.substring(0,3).equalsIgnoreCase("rep")){
+                            if(hojas1.equalsIgnoreCase("r")){
                                 modo = hojas1;
                             }
-                            if(hojas2.substring(0,3).equalsIgnoreCase("rep")){
+                            if(hojas2.equalsIgnoreCase("r")){
                                 modo = hojas2;
                             }
-                            if(hojas3.substring(0,3).equalsIgnoreCase("rep")){
+                            if(hojas3.equalsIgnoreCase("r")){
                                 modo = hojas3;
                             }
                         }
@@ -437,3 +437,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+

@@ -34,6 +34,8 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
     static private String cantCol,datos;
     static private String[] datos2;
     static private String name;
+    static private int index = -1;
+    static private String[] urls ={"1m9qVR6aTM3mOcwOGQKXEI9fBE9VrDOGOYViaQCNGIkQ","16kIxdrDC4or1rDjsH8iLRTKWmJcTnKJvSsggLSHzWwA","1IxejOVQWO5ucH-pFPAGi71Yoo3IjWjNCvxe4xPi5Xew"};
     //static private int cantCol2;
     Spinner listaCampos;
     ArrayList<String> campos = new ArrayList<>();
@@ -54,8 +56,11 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
         listaCampos = findViewById(R.id.isSpiner);
 
         campos.add("Seleccionar hoja");
+        campos.add("Colico");
+        campos.add("Chiriuco");
+        campos.add("Quillayes");
 
-        if(isOnline(getApplicationContext())){
+        /*if(isOnline(getApplicationContext())){
             DataRequest02 dataRequest = new DataRequest02(this);
             dataRequest.delegate = this;
             dataRequest.execute("https://script.google.com/macros/s/AKfycbxh_lDr1HRXLfqZtrncHCpWQTFEtJg1szav00vTr4cQDpvqYkM/exec");
@@ -67,7 +72,7 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
             SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
             String hojaGuardada = sharpref.getString("hojaGuardada","");
             Toast.makeText(getApplicationContext(),"No existe conexión a internet. Estas en "+hojaGuardada, Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         Button btn_ingresar = (Button) findViewById(R.id.btn_leer);
         Button btn_descargar = (Button) findViewById(R.id.btn_descargar);
@@ -78,6 +83,8 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0) {
+                    index = position-1;
+                    //Hacer cambio de background dependiendo la posicion;
                     String campSelect = listaCampos.getSelectedItem().toString();
                     System.out.println("seleccion: " + campSelect);
                     name = campSelect;
@@ -91,6 +98,9 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
 
             }
         });
+
+        ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,campos);
+        listaCampos.setAdapter(adap);
 
 
     }
@@ -111,7 +121,7 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
             {
                 cantCol = jsonObject.getString(nombreHojas[i]+" cols");
                 datos = jsonObject.getString(nombreHojas[i]+"");
-                File file = new File(Environment.getExternalStorageDirectory(), nombreHojas[i]+".txt");
+                File file = new File(Environment.getExternalStorageDirectory(), nombreHojas[i].substring(0,1)+".txt");
                 file.createNewFile();
                 OutputStreamWriter fout1 = new OutputStreamWriter(new FileOutputStream(file));
                 fout1.write(cantCol+"\n" +datos);
@@ -121,9 +131,9 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
             SharedPreferences sf = getSharedPreferences("credenciales",context.MODE_PRIVATE);
             SharedPreferences.Editor editor1 = sf.edit();
 
-            editor1.putString("sheet1", nombreHojas[0]);
-            editor1.putString("sheet2", nombreHojas[1]);
-            editor1.putString("sheet3", nombreHojas[2]);
+            editor1.putString("sheet1", nombreHojas[0].substring(0,1));
+            editor1.putString("sheet2", nombreHojas[1].substring(0,1));
+            editor1.putString("sheet3", nombreHojas[2].substring(0,1));
             editor1.commit();
 
 
@@ -172,17 +182,24 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
 
     public void onclick(View view) {
         if(view.getId() == R.id.btn_descargar){
-            Toast.makeText(this, "Descargando "+name, Toast.LENGTH_SHORT).show();
-            DataRequest dataRequest = new DataRequest(this);
-            dataRequest.delegate = this;
-            dataRequest.execute("https://script.google.com/macros/s/AKfycbx_3i4ladoSuoap8_1DIWGfA7JmuQoLAQqs3krc-5Gi6wnVkgY/exec");
-            SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharpref.edit();
+            System.out.println("El valor del indice es: "+index);
+            if (index!=-1)
+            {
+                Toast.makeText(this, "Descargando " + name, Toast.LENGTH_SHORT).show();
+                DataRequest dataRequest = new DataRequest(this);
+                dataRequest.delegate = this;
+                dataRequest.execute("https://script.google.com/macros/s/AKfycbx_3i4ladoSuoap8_1DIWGfA7JmuQoLAQqs3krc-5Gi6wnVkgY/exec?sId=" + urls[index]);
+                SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharpref.edit();
 
-            editor.putString("hojaGuardada",name);
+                editor.putString("hojaGuardada", name);
 
-            editor.commit();
-
+                editor.commit();
+            }
+            else
+            {
+                Toast.makeText(this,"Seleccione un predio para ser descargado",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

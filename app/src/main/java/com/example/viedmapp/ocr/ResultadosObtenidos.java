@@ -107,10 +107,10 @@ public class ResultadosObtenidos extends AppCompatActivity {
 
         }
 
-        if(modo.substring(0,3).equalsIgnoreCase("pro")){
+        if(modo.equalsIgnoreCase("p")){
             infoCheck.setVisibility(View.VISIBLE);
         }
-        if(modo.substring(0,3).equalsIgnoreCase("gen")) {
+        if(modo.equalsIgnoreCase("g")) {
             puntuacion.setVisibility(View.VISIBLE);
             layoutBotones.setVisibility(View.VISIBLE);
         }
@@ -118,24 +118,6 @@ public class ResultadosObtenidos extends AppCompatActivity {
     }
 
 
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_back:
-                Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
-                startActivity(intent2);
-                finish();
-                break;
-            case R.id.btn_busMadre:
-                System.out.println("data1:"+ dataBase[0]);
-                busqueda(idMadre, dataBase, cant);
-                System.out.println("data2:"+ dataBase[0]);
-                break;
-            case R.id.btn_busPadre:
-                busqueda(idPadre, dataBase, cant);
-                break;
-        }
-
-    }
 
     private void busqueda(String busco, String[] datos, int salto) {
         int i = salto;
@@ -178,16 +160,38 @@ public class ResultadosObtenidos extends AppCompatActivity {
 
 
     }
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_back:
+                onBackPressed();
+                finish();
+                /*Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
+                startActivity(intent2);
+                finish();*/
+                break;
+            case R.id.btn_busMadre:
+                System.out.println("data1:"+ dataBase[0]);
+                busqueda(idMadre, dataBase, cant);
+                System.out.println("data2:"+ dataBase[0]);
+                break;
+            case R.id.btn_busPadre:
+                busqueda(idPadre, dataBase, cant);
+                break;
+        }
+
+    }
+
 
     public void goScan(View v){
         Intent myintent = new Intent(ResultadosObtenidos.this, MainActivity.class);
-        startActivity(myintent);
+        startActivity(new Intent(getBaseContext(), MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
         finish();
     }
 
 
-    public void onBackPressed(){
+    /*public void onBackPressed(){
         Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
         startActivity(intent2);
-    }
+    }*/
 }

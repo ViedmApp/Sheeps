@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">OCR</string>
+    <string name="app_name">Sheep</string>
     <string name="btn_enviar">ENVIAR</string>
     <string name="btn_cancelar">Regresar</string>
     <string name="codigo">Editar número</string>
