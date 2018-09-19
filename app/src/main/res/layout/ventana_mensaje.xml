@@ -2,14 +2,13 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_mensaje"
-        android:layout_width="292dp"
-        android:layout_height="225dp"
+        android:layout_width="323dp"
+        android:layout_height="231dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -25,18 +24,20 @@
         <EditText
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="44dp"
             android:hint="@string/codigo"
             android:inputType="text"
             android:textColor="@color/text"
             android:textColorHint="@color/text"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:contentDescription="ds"
             android:id="@+id/button_cancel"
             android:layout_width="36dp"
             android:layout_height="24dp"
@@ -54,6 +55,7 @@
 
 
         <ImageView
+            android:contentDescription="ds"
             android:id="@+id/btngen"
             android:layout_width="76dp"
             android:layout_height="76dp"
@@ -69,6 +71,7 @@
             app:srcCompat="@drawable/ic_gen" />
 
         <ImageView
+            android:contentDescription="ds"
             android:id="@+id/btnrep"
             android:layout_width="76dp"
             android:layout_height="76dp"
@@ -84,6 +87,7 @@
             app:srcCompat="@drawable/ic_ram" />
 
         <ImageView
+            android:contentDescription="ds"
             android:id="@+id/btnprod"
             android:layout_width="76dp"
             android:layout_height="76dp"

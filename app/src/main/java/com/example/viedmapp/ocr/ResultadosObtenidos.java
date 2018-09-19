@@ -30,6 +30,7 @@ public class ResultadosObtenidos extends AppCompatActivity {
     LinearLayout infoCheck;
     ConstraintLayout layoutBotones;
     ImageView checkImage;
+    View viewPadres;
 
     String idMadre;
     String idPadre;
@@ -45,7 +46,7 @@ public class ResultadosObtenidos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados_obtenidos);
 
-        picturesRecycler = (RecyclerView) findViewById(R.id.datos_recycler);
+        picturesRecycler = findViewById(R.id.datos_recycler);
         picturesRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         picturesRecycler.setVerticalScrollBarEnabled(true);
 
@@ -63,7 +64,8 @@ public class ResultadosObtenidos extends AppCompatActivity {
         checkImage = findViewById(R.id.imgCheck);
         mostrarId = findViewById(R.id.text_titulo);
         infoCheck =  findViewById(R.id.linearCheck);
-        layoutBotones = (ConstraintLayout) findViewById(R.id.layout_botones);
+        layoutBotones = findViewById(R.id.layout_botones);
+        viewPadres = findViewById(R.id.viewBtnPadres);
 
 
         Bundle extras = getIntent().getExtras();
@@ -77,6 +79,7 @@ public class ResultadosObtenidos extends AppCompatActivity {
         puntuacion.setVisibility(View.INVISIBLE);
         infoCheck.setVisibility(View.INVISIBLE);
         layoutBotones.setVisibility(View.INVISIBLE);
+        viewPadres.setVisibility(View.INVISIBLE);
 
 
         for(int i=0; i<cant; i++){
@@ -84,9 +87,9 @@ public class ResultadosObtenidos extends AppCompatActivity {
             datakey = datakey.concat("d");
             String info = extras.getString(datakey);
             String tittle = extras.getString(tittlekey);
-            String lac = tittle.substring(0,2);
 
-            if(!(tittle.equalsIgnoreCase("rating")) && !(tittle.equalsIgnoreCase("id")) && !(lac.equalsIgnoreCase("la"))){
+            if(!(tittle.equalsIgnoreCase("rating")) && !(tittle.equalsIgnoreCase("id")) &&
+                    !(tittle.equalsIgnoreCase("lactancia actual"))){
                 pictures.add(new Picture(tittle, info));
                 if(tittle.equalsIgnoreCase("madre")){
                     idMadre = info;
@@ -94,13 +97,14 @@ public class ResultadosObtenidos extends AppCompatActivity {
                     idPadre = info;
                 }
             }else{
-                if(tittle.equalsIgnoreCase("rating")){
+                if(tittle.equalsIgnoreCase("merito")){
                     puntuacion.setProgress(Integer.valueOf(info));
-                }else if(tittle.equalsIgnoreCase("id")){
+                }if(tittle.equalsIgnoreCase("id")){
                     mostrarId.append(info);
-                }else if(lac.equalsIgnoreCase("la")){
+                }if(tittle.equalsIgnoreCase("lactancia actual")){
                     if(info.substring(0,1).equalsIgnoreCase("s")){
                         checkImage.setImageResource(R.drawable.ic_check_box_black_24dp);
+                        viewPadres.setVisibility(View.VISIBLE);
                     }
                 }
             }

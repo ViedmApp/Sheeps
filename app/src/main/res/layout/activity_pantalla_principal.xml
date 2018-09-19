@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/btn_leer"
-        android:layout_width="231dp"
-        android:layout_height="45dp"
+        android:layout_width="230dp"
+        android:layout_height="54dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -19,6 +19,7 @@
         android:onClick="onClick"
         android:text="@string/btn_inicio"
         android:textColor="@color/text"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -33,17 +34,19 @@
         android:layout_marginTop="48dp"
         android:background="@drawable/ic_file_download_black_24dp"
         android:onClick="onclick"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/isSpiner"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
+
         android:id="@+id/isSpiner"
-        android:layout_width="192dp"
-        android:layout_height="35dp"
+        android:layout_width="232dp"
+        android:layout_height="51dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="48dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:popupBackground="@color/colorPrimary"
         app:layout_constraintEnd_toStartOf="@+id/btn_descargar"
         app:layout_constraintHorizontal_bias="0.111"

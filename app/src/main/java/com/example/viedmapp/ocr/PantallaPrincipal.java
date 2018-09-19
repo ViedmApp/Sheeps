@@ -1,11 +1,15 @@
 package com.example.viedmapp.ocr;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -40,6 +45,8 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
     Spinner listaCampos;
     ArrayList<String> campos = new ArrayList<>();
     Context context = this;
+    final int REQUEST_ACCES_WRITE = 0;
+    final int RequestCameraPermissionID = 1001;
 
 
 
@@ -47,6 +54,11 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_principal);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_ACCES_WRITE);
+
+
         nombreHojas[0] = "";
         nombreHojas[1] = "";
         nombreHojas[2] = "";
@@ -55,33 +67,21 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
 
         listaCampos = findViewById(R.id.isSpiner);
 
-        campos.add("Seleccionar hoja");
+        campos.add("Seleccionar predio");
         campos.add("Colico");
         campos.add("Chiriuco");
         campos.add("Quillayes");
 
-        /*if(isOnline(getApplicationContext())){
-            DataRequest02 dataRequest = new DataRequest02(this);
-            dataRequest.delegate = this;
-            dataRequest.execute("https://script.google.com/macros/s/AKfycbxh_lDr1HRXLfqZtrncHCpWQTFEtJg1szav00vTr4cQDpvqYkM/exec");
 
-            ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,campos);
-            listaCampos.setAdapter(adap);
 
-        }else{
-            SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
-            String hojaGuardada = sharpref.getString("hojaGuardada","");
-            Toast.makeText(getApplicationContext(),"No existe conexión a internet. Estas en "+hojaGuardada, Toast.LENGTH_SHORT).show();
-        }*/
 
-        Button btn_ingresar = (Button) findViewById(R.id.btn_leer);
-        Button btn_descargar = (Button) findViewById(R.id.btn_descargar);
 
 
 
         listaCampos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 if(position != 0) {
                     index = position-1;
                     //Hacer cambio de background dependiendo la posicion;
@@ -89,6 +89,10 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
                     System.out.println("seleccion: " + campSelect);
                     name = campSelect;
                     Toast.makeText(PantallaPrincipal.this,name+" seleccionado", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    index = position-1;
                 }
 
             }
@@ -98,11 +102,32 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
 
             }
         });
+        ArrayAdapter<String> adap = new ArrayAdapter<>(this, R.layout.spinner_item_predio,campos);
 
-        ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,campos);
         listaCampos.setAdapter(adap);
 
 
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case RequestCameraPermissionID: {
+
+                break;
+            }
+            case REQUEST_ACCES_WRITE:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "Permiso aceptado", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+
+        }
     }
 
     public static boolean isOnline(Context context) {
@@ -169,11 +194,6 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
             String sheet2 = sf.getString("sheet2", "");
             String sheet3 = sf.getString("sheet3", "");
 
-            //myintent.putExtra("hoja0",sheet1);
-            //myintent.putExtra("hoja1",sheet2);
-            //myintent.putExtra("hoja2",sheet3);
-
-            Toast.makeText(getApplicationContext(),"cargo: "+sheet1+" "+sheet2+" "+sheet3, Toast.LENGTH_SHORT).show();
 
             startActivity(myintent);
             finish();
@@ -182,23 +202,26 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
 
     public void onclick(View view) {
         if(view.getId() == R.id.btn_descargar){
-            System.out.println("El valor del indice es: "+index);
-            if (index!=-1)
-            {
-                Toast.makeText(this, "Descargando " + name, Toast.LENGTH_SHORT).show();
-                DataRequest dataRequest = new DataRequest(this);
-                dataRequest.delegate = this;
-                dataRequest.execute("https://script.google.com/macros/s/AKfycbx_3i4ladoSuoap8_1DIWGfA7JmuQoLAQqs3krc-5Gi6wnVkgY/exec?sId=" + urls[index]);
-                SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharpref.edit();
+            if(isOnline(getApplicationContext())){
+                if (index!=-1)
+                {
+                    Toast.makeText(this, "Descargando " + name, Toast.LENGTH_SHORT).show();
+                    DataRequest dataRequest = new DataRequest(this);
+                    dataRequest.delegate = this;
+                    dataRequest.execute("https://script.google.com/macros/s/AKfycbx_3i4ladoSuoap8_1DIWGfA7JmuQoLAQqs3krc-5Gi6wnVkgY/exec?sId=" + urls[index]);
+                    SharedPreferences sharpref = getPreferences(context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharpref.edit();
 
-                editor.putString("hojaGuardada", name);
+                    editor.putString("hojaGuardada", name);
 
-                editor.commit();
-            }
-            else
-            {
-                Toast.makeText(this,"Seleccione un predio para ser descargado",Toast.LENGTH_SHORT).show();
+                    editor.commit();
+                }
+                else
+                {
+                    Toast.makeText(this,"Seleccione un predio para ser descargado",Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getApplicationContext(),"No existe conexión a internet, no puedes actualizar la base de datos", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -207,11 +230,4 @@ public class PantallaPrincipal extends AppCompatActivity implements AsyncRespons
 
 
 
-   /* public void onClick(View view) {
-        if(view.getId() == R.id.btn_enter){
-            Intent myintent = new Intent (PantallaPrincipal.this, MainActivity.class);
-            startActivity(myintent);
-            finish();
-        }
-    }*/
 }

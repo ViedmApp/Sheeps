@@ -16,5 +16,6 @@
     <string name="btn_buscarMadre">buscar madre</string>
     <string name="btn_buscarPadre">buscar padre</string>
     <string name="nueva_busqueda">Nueva busqueda</string>
+    <string name="txt_lactancia">Lactancia Actual:</string>
 
 </resources>

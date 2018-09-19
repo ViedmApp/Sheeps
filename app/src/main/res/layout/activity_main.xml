@@ -26,7 +26,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +44,9 @@
             android:ems="10"
             android:hint="@string/msg_textEdit"
             android:inputType="textPersonName"
+            android:textColor="@color/text"
+            android:textColorHint="@color/text"
+            android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_enviartext"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,14 +54,14 @@
 
         <TextView
             android:id="@+id/btn_enviartext"
-            android:layout_width="65dp"
-            android:layout_height="27dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="78dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginEnd="4dp"
             android:onClick="onClick"
             android:text="@string/btn_enviar"
             android:textColor="@color/text"
-            android:textSize="18sp"
+            android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editText" />

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.SurfaceTexture;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Environment;
@@ -23,6 +24,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -44,7 +46,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     SurfaceView camara;
     TextView mostrar;
     CameraSource cameraSource;
@@ -71,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     //datos a enviar:
-    String edad = "2";
-    String madre = "2121";
-    String padre = "5154";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -103,12 +102,11 @@ public class MainActivity extends AppCompatActivity {
         //Obteniendo el modo en que se ingreso (reproductivo, genealogico, productivo)
 
 
-        switchC = (Switch) findViewById(R.id.switchOff);
+        switchC = findViewById(R.id.switchOff);
 
         camara = findViewById(R.id.surface_view);
         mostrar =  findViewById(R.id.text_view);
         codEnviado = findViewById(R.id.editText);
-
         TextRecognizer textoReconocido = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textoReconocido.isOperational()) {
             Log.w("MainActivity", "Las dependencias del detector aún no están disponibles");
@@ -127,9 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-                            ActivityCompat.requestPermissions(MainActivity.this,
-                                    new String[]{Manifest.permission.CAMERA},
-                                    RequestCameraPermissionID);
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, RequestCameraPermissionID);
                             return;
                         }
                         cameraSource.start(camara.getHolder());
@@ -137,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
                 @Override
                 public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
@@ -148,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                     cameraSource.stop();
                 }
             });
-
             textoReconocido.setProcessor(new Detector.Processor<TextBlock>() {
                 @Override
                 public void release() {
@@ -181,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
+
                     }
 
                 }
@@ -205,10 +200,6 @@ public class MainActivity extends AppCompatActivity {
         editar.setText(result);
         editar.setSelection(editar.getText().length());
 
-        /*Bundle extras = getIntent().getExtras();
-        hojas1 = extras.getString("hoja0");
-        hojas2 = extras.getString("hoja1");
-        hojas3 = extras.getString("hoja2");*/
 
         SharedPreferences sf = getSharedPreferences("credenciales",context.MODE_PRIVATE);
         String sheet1 = sf.getString("sheet1","");
@@ -257,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                         String busco = editar.getText().toString();
                         busqueda(busco, fin);
                         fin.close();
+                        //alertDialog.cancel();
                     }
                     catch (Exception e)
                     {
@@ -294,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
                         String busco = editar.getText().toString();
                         busqueda(busco, fin);
                         fin.close();
+                        //alertDialog.cancel();
                     }
                     catch (Exception e)
                     {
@@ -327,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
                         String busco = editar.getText().toString();
                         busqueda(busco, fin);
                         fin.close();
+                        //alertDialog.cancel();
                     }
                     catch (Exception e)
                     {
@@ -436,6 +430,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }
 
 
