@@ -88,7 +88,7 @@ public class ResultadosObtenidos extends AppCompatActivity {
             String info = extras.getString(datakey);
             String tittle = extras.getString(tittlekey);
 
-            if(!(tittle.equalsIgnoreCase("rating")) && !(tittle.equalsIgnoreCase("id")) &&
+            if(!(tittle.equalsIgnoreCase("mérito")) && !(tittle.equalsIgnoreCase("id")) &&
                     !(tittle.equalsIgnoreCase("lactancia actual"))){
                 pictures.add(new Picture(tittle, info));
                 if(tittle.equalsIgnoreCase("madre")){
@@ -97,7 +97,7 @@ public class ResultadosObtenidos extends AppCompatActivity {
                     idPadre = info;
                 }
             }else{
-                if(tittle.equalsIgnoreCase("merito")){
+                if(tittle.equalsIgnoreCase("mérito")){
                     puntuacion.setProgress(Integer.valueOf(info));
                 }if(tittle.equalsIgnoreCase("id")){
                     mostrarId.append(info);
