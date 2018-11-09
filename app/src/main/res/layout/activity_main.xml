@@ -43,7 +43,7 @@
             android:layout_marginStart="8dp"
             android:ems="10"
             android:hint="@string/msg_textEdit"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:textColor="@color/text"
             android:textColorHint="@color/text"
             android:textSize="21sp"
@@ -80,9 +80,11 @@
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:checked="false"
+        android:onClick="OffCam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="OffCam"/>
+        tools:checked="false" />
 
     <ImageView
         android:contentDescription="@string/cont_des_camoff"
