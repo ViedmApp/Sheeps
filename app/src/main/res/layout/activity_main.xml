@@ -6,38 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <SurfaceView
-        android:id="@+id/surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+    <Button
+        android:id="@+id/btngen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:drawableTop="@drawable/ic_gen"
+        android:onClick="onClick"
+        android:scaleType="center"
+        android:text="@string/btn_gen"
+        app:layout_constraintBottom_toTopOf="@+id/btnrep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_lectura"
-        android:layout_alignParentBottom="true"
-        android:textColor="#fff"
-        android:textSize="20sp"/>
+    <Button
+        android:id="@+id/btnrep"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:drawableTop="@drawable/ic_ram"
+        android:onClick="onClick"
+        android:scaleType="center"
+        android:text="@string/btn_repro"
+        app:layout_constraintBottom_toTopOf="@+id/btnprod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btngen" />
+
+    <Button
+        android:id="@+id/btnprod"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:drawableTop="@drawable/ic_ubre"
+        android:onClick="onClick"
+        android:scaleType="center"
+        android:text="@string/btn_prod"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnrep" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="78dp"
         android:background="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btngen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
+            android:layout_width="368dp"
+            android:layout_height="58dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -48,23 +70,10 @@
             android:textColorHint="@color/text"
             android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_enviartext"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/btn_enviartext"
-            android:layout_width="78dp"
-            android:layout_height="36dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="4dp"
-            android:onClick="onClick"
-            android:text="@string/btn_enviar"
-            android:textColor="@color/text"
-            android:textSize="21sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editText" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.Guideline
@@ -72,29 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.94" />
-
-    <Switch
-        android:id="@+id/switchOff"
-        android:layout_width="64dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:checked="false"
-        android:onClick="OffCam"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:checked="false" />
-
-    <ImageView
-        android:contentDescription="@string/cont_des_camoff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/ic_camera_off_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchOff" />
+        app:layout_constraintGuide_percent="0.71" />
 
 
 </android.support.constraint.ConstraintLayout>

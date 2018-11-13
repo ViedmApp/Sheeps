@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -41,10 +42,15 @@ public class ResultadosObtenidos extends AppCompatActivity {
     RecyclerView picturesRecycler;
     ArrayList<Picture> pictures = new ArrayList<>();
 
+    EditText codEnviado;
+    String codigoBusqueda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados_obtenidos);
+
+       codEnviado= findViewById(R.id.editText);
+
 
         picturesRecycler = findViewById(R.id.datos_recycler);
         picturesRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
@@ -168,7 +174,6 @@ public class ResultadosObtenidos extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button_back:
                 onBackPressed();
-                finish();
                 /*Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
                 startActivity(intent2);
                 finish();*/
@@ -188,14 +193,22 @@ public class ResultadosObtenidos extends AppCompatActivity {
 
     public void goScan(View v){
         Intent myintent = new Intent(ResultadosObtenidos.this, MainActivity.class);
-        startActivity(new Intent(getBaseContext(), MainActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+        myintent.addFlags (Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(myintent);
+
+        /*startActivity(new Intent(ResultadosObtenidos.this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));*/
+
+
         finish();
     }
 
 
-    /*public void onBackPressed(){
-        Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
-        startActivity(intent2);
-    }*/
+    public void onBackPressed(){
+        /*Intent intent2 = new Intent(ResultadosObtenidos.this, ResultadosObtenidos.class);
+        startActivity(intent2);*/
+        super.onBackPressed();
+
+
+    }
 }

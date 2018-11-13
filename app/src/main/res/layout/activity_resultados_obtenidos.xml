@@ -112,7 +112,7 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:contentDescription="ic no lactancia"
+                android:contentDescription="@string/no_lactancia"
                 android:id="@+id/imgCheck"
                 android:layout_width="42sp"
                 android:layout_height="42sp"
@@ -143,7 +143,7 @@
         android:id="@+id/button_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:onClick="onClick"
         android:text="@string/btn_back"
         android:textColor="@color/text"

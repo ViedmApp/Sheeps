@@ -10,12 +10,17 @@
     <string name="btn_back">regresar</string>
     <string name="txt_lectura">Sin algo que leer</string>
     <string name="dialog_wait">Descargando la base de datos...</string>
-    <string name="msg_textEdit">Ingrese número manual</string>
+    <string name="msg_textEdit">Buscar</string>
     <string name="btn_inicio">iniciar</string>
     <string name="cont_des_camoff">camara apaga icono</string>
     <string name="btn_buscarMadre">buscar madre</string>
     <string name="btn_buscarPadre">buscar padre</string>
     <string name="nueva_busqueda">Nueva busqueda</string>
     <string name="txt_lactancia">Lactancia Actual:</string>
+    <string name="btn_gen">Genealogía</string>
+    <string name="btn_prod">Producción</string>
+    <string name="btn_repro">Reproducción</string>
+    <string name="no_lactancia">no lactancia imagen</string>
+
 
 </resources>
